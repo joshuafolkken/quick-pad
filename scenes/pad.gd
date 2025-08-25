@@ -1,8 +1,71 @@
 class_name Pad
 extends Control
 
+const SUPPORTED_AUDIO_FORMATS := ["wav", "mp3", "ogg"]
+
+var _is_audio_loaded: bool:
+	get:
+		return _player.stream != null
+
 @onready var _label: Label = $Label
 @onready var _player: AudioStreamPlayer = $Player
+
+
+func _create_audio_stream(file_path: String) -> AudioStream:
+	var extension := file_path.get_extension().to_lower()
+
+	match extension:
+		"wav":
+			return AudioStreamWAV.load_from_file(file_path)
+		"mp3":
+			return AudioStreamMP3.load_from_file(file_path)
+		"ogg":
+			return AudioStreamOggVorbis.load_from_file(file_path)
+		_:
+			print("Unsupported audio format: ", extension)
+			return null
+
+
+func _is_mouse_in_pad_area() -> bool:
+	return Rect2(global_position, size).has_point(get_global_mouse_position())
+
+
+func _is_valid_audio_file(file_path: String) -> bool:
+	var extension := file_path.get_extension().to_lower()
+	return extension in SUPPORTED_AUDIO_FORMATS
+
+
+func _load_audio_file(file_path: String) -> void:
+	var file_name := file_path.get_file()
+	print("Loading audio file: ", file_name)
+
+	var audio_stream := _create_audio_stream(file_path)
+	if audio_stream == null:
+		return
+
+	_player.stream = audio_stream
+	var file_name_no_ext := file_name.get_basename()
+	set_label(file_name_no_ext)
+
+
+func _on_files_dropped(files: PackedStringArray) -> void:
+	if not _is_mouse_in_pad_area():
+		return
+
+	if files.size() != 1:
+		print("Please drop exactly one audio file")
+		return
+
+	var file_path := files[0]
+	if not _is_valid_audio_file(file_path):
+		print("Invalid audio file format")
+		return
+
+	_load_audio_file(file_path)
+
+
+func _ready() -> void:
+	get_window().files_dropped.connect(_on_files_dropped)
 
 
 func set_label(value: String) -> void:
@@ -10,4 +73,8 @@ func set_label(value: String) -> void:
 
 
 func _on_button_down() -> void:
+	if not _is_audio_loaded:
+		print("No audio file loaded")
+		return
+
 	_player.play()

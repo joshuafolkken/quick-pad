@@ -1,0 +1,5 @@
+elif
+onready
+randf
+tscn
+Vorbis

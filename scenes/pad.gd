@@ -7,7 +7,7 @@ var _is_audio_loaded: bool:
 	get:
 		return _player.stream != null
 
-@onready var _label: Label = $Label
+@onready var _label: Label = $MarginContainer/Label
 @onready var _player: AudioStreamPlayer = $Player
 
 
@@ -66,6 +66,7 @@ func _on_files_dropped(files: PackedStringArray) -> void:
 
 func _ready() -> void:
 	get_window().files_dropped.connect(_on_files_dropped)
+	_label.text = "N/A"
 
 
 func set_label(value: String) -> void:

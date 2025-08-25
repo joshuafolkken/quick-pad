@@ -4,9 +4,9 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1756110425|7299144';
+const CACHE_VERSION = '1756112614|8367918';
 /** @type {string} */
-const CACHE_PREFIX = 'New Game Project-sw-cache-';
+const CACHE_PREFIX = 'Quick Pad-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
 /** @type {string} */
 const OFFLINE_URL = 'index.offline.html';

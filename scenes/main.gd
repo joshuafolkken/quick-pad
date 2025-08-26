@@ -40,10 +40,6 @@ const FILE_NAMES: Array = [
 	["クイズ出題1.mp3", "クイズ正解1.mp3", "クイズ不正解1.mp3"],
 ]
 
-@onready var pad0: Pad = $CanvasLayer/VBoxContainer/Row0/Pad0
-@onready var pad1: Pad = $CanvasLayer/VBoxContainer/Row0/Pad1
-@onready var pad2: Pad = $CanvasLayer/VBoxContainer/Row0/Pad2
-
 
 func _ready() -> void:
 	for row in FILE_NAMES.size():

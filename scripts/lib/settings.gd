@@ -2,7 +2,7 @@ class_name Settings
 
 enum ErrorCode { SUCCESS = 0, FILE_NOT_FOUND = 1, SAVE_ERROR = 2, LOAD_ERROR = 3 }
 
-enum Section { LANGUAGE, STATISTICS }
+enum Section { LANGUAGE, STATISTICS, PAD }
 
 enum SectionKey { LOCALE, PLAY_COUNT, CLEAR_COUNT }
 
@@ -32,25 +32,26 @@ static func clear() -> ErrorCode:
 	return ErrorCode.SUCCESS
 
 
-static func _load(section: Section, key: SectionKey, default: Variant) -> Variant:
+static func _get_value(section_name: String, key_name: String, default: Variant) -> Variant:
 	var config := ConfigFile.new()
 
 	if config.load(CONFIG.PATH) != OK:
-		# print("[Settings] " + ERROR_MESSAGES[ErrorCode.LOAD_ERROR] % [CONFIG.PATH, default])
 		return default
-
-	var section_name: String = Section.keys()[section]
-	var key_name: String = SectionKey.keys()[key]
 
 	return config.get_value(section_name, key_name, default)
 
 
-static func _save(section: Section, key: SectionKey, value: Variant) -> ErrorCode:
+static func _load(section: Section, key: SectionKey, default: Variant) -> Variant:
+	var section_name: String = Section.keys()[section]
+	var key_name: String = SectionKey.keys()[key]
+
+	return _get_value(section_name, key_name, default)
+
+
+static func _set_value(section_name: String, key_name: String, value: Variant) -> ErrorCode:
 	var config := ConfigFile.new()
 	config.load(CONFIG.PATH)
 
-	var section_name: String = Section.keys()[section]
-	var key_name: String = SectionKey.keys()[key]
 	config.set_value(section_name, key_name, value)
 
 	var err := config.save(CONFIG.PATH)
@@ -59,6 +60,13 @@ static func _save(section: Section, key: SectionKey, value: Variant) -> ErrorCod
 		return ErrorCode.SAVE_ERROR
 
 	return ErrorCode.SUCCESS
+
+
+static func _save(section: Section, key: SectionKey, value: Variant) -> ErrorCode:
+	var section_name: String = Section.keys()[section]
+	var key_name: String = SectionKey.keys()[key]
+
+	return _set_value(section_name, key_name, value)
 
 
 static func load_language(default_locale: String) -> String:
@@ -85,3 +93,17 @@ static func load_clear_count(default := 0) -> int:
 static func increment_clear_count() -> ErrorCode:
 	var count := load_clear_count() + 1
 	return _save(Section.STATISTICS, SectionKey.CLEAR_COUNT, count)
+
+
+static func _load_pad(row: int, column: int, default: String) -> Array[String]:
+	var section_name: String = Section.keys()[Section.PAD]
+	var key_name := "0-%d-%d" % [row, column]
+
+	return _get_value(section_name, key_name, default)
+
+
+static func _save_pad(row: int, column: int, file_path: String) -> ErrorCode:
+	var section_name: String = Section.keys()[Section.PAD]
+	var key_name := "0-%d-%d" % [row, column]
+
+	return _set_value(section_name, key_name, file_path)

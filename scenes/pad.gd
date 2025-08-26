@@ -9,6 +9,7 @@ var _is_audio_loaded: bool:
 
 @onready var _label: Label = $MarginContainer/Label
 @onready var _player: AudioStreamPlayer = $Player
+@onready var _rect: ColorRect = $ColorRect
 
 
 func _create_audio_stream(file_path: String) -> AudioStream:
@@ -73,7 +74,20 @@ func set_label(value: String) -> void:
 	_label.text = value
 
 
+func _add_glow_effect() -> void:
+	var initial_color := _rect.color
+	var glow_color := Color(1.0, 1.0, 1.0, 1.0)
+
+	var tween := create_tween()
+	tween.set_parallel(true)
+
+	tween.tween_property(_rect, "color", glow_color, 0.04)
+	tween.tween_property(_rect, "color", initial_color, 0.04).set_delay(0.04)
+
+
 func _on_button_down() -> void:
+	_add_glow_effect()
+
 	if not _is_audio_loaded:
 		print("No audio file loaded")
 		return

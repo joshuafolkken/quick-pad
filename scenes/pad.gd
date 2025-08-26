@@ -49,6 +49,18 @@ func _load_audio_file(file_path: String) -> void:
 	set_label(file_name_no_ext)
 
 
+func load_audio_by_uid(uid: String, file_name: String) -> void:
+	var audio_stream := load(uid)
+
+	if audio_stream == null:
+		print("Failed to load audio with UID: ", uid)
+		return
+
+	_player.stream = audio_stream
+	_label.text = file_name.get_basename()
+	print("Successfully loaded audio with UID: ", uid)
+
+
 func _on_files_dropped(files: PackedStringArray) -> void:
 	if not _is_mouse_in_pad_area():
 		return

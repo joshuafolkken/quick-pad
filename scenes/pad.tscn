@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://houetpgse2ap"]
+[gd_scene load_steps=4 format=3 uid="uid://houetpgse2ap"]
 
 [ext_resource type="Script" uid="uid://db12omxg40u6c" path="res://scenes/pad.gd" id="1_acetd"]
 [ext_resource type="AudioStream" uid="uid://sic3h28wk3in" path="res://assets/audio/1.mp3" id="2_sqfiy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_sqfiy"]
+font_size = 50
 
 [node name="Pad" type="Control"]
 layout_mode = 3
@@ -22,18 +25,27 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Label" type="Label" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 60
-text = "Pad 0"
+text = "うはあああああああああああああああああああえええ"
+label_settings = SubResource("LabelSettings_sqfiy")
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="Button" type="TextureButton" parent="."]
 layout_mode = 1

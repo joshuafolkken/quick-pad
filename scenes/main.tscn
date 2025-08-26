@@ -16,14 +16,14 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 2
 
-[node name="Row" parent="CanvasLayer/VBoxContainer" instance=ExtResource("2_sugp2")]
+[node name="Row0" parent="CanvasLayer/VBoxContainer" instance=ExtResource("2_sugp2")]
+layout_mode = 2
+
+[node name="Row1" parent="CanvasLayer/VBoxContainer" instance=ExtResource("2_sugp2")]
 layout_mode = 2
 
 [node name="Row2" parent="CanvasLayer/VBoxContainer" instance=ExtResource("2_sugp2")]
 layout_mode = 2
 
 [node name="Row3" parent="CanvasLayer/VBoxContainer" instance=ExtResource("2_sugp2")]
-layout_mode = 2
-
-[node name="Row4" parent="CanvasLayer/VBoxContainer" instance=ExtResource("2_sugp2")]
 layout_mode = 2

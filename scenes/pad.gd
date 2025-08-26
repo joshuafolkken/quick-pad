@@ -85,7 +85,7 @@ func _add_glow_effect() -> void:
 	tween.tween_property(_rect, "color", initial_color, 0.04).set_delay(0.04)
 
 
-func _on_button_down() -> void:
+func play_audio() -> void:
 	_add_glow_effect()
 
 	if not _is_audio_loaded:
@@ -93,3 +93,7 @@ func _on_button_down() -> void:
 		return
 
 	_player.play()
+
+
+func _on_button_down() -> void:
+	play_audio()

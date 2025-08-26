@@ -4,7 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://sic3h28wk3in" path="res://assets/audio/1.mp3" id="2_sqfiy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_sqfiy"]
-font_size = 50
+font_size = 40
 
 [node name="Pad" type="Control"]
 layout_mode = 3

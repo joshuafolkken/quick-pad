@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Quick Pad"
-config/version="0.6.0"
+config/version="0.7.0"
 run/main_scene="uid://eufd3b7a5ftf"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
@@ -23,6 +23,9 @@ gdscript/warnings/unsafe_property_access=1
 gdscript/warnings/unsafe_method_access=1
 gdscript/warnings/unsafe_cast=1
 gdscript/warnings/unsafe_call_argument=1
+gdscript/stretch/aspect="keep"
+gdscript/size/viewport_height=648
+gdscript/size/viewport_width=1152
 
 [display]
 

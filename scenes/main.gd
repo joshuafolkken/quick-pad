@@ -5,7 +5,7 @@ const FILE_PATH_FORMAT = "res://assets/audio/%s"
 
 const AUDIO_UID_MAPPING: Dictionary[String, String] = {
 	"和太鼓でドン.mp3": "uid://ddd8foqjrnovn",
-	"和太鼓でドドン.mp3": "uid://bw52nji8ay54d",
+	"和太鼓でドドン.mp3": "uid://dg2q22benpd3",
 	"チーン1.mp3": "uid://wbv01t4b6ymq",
 	"歓声と拍手1.mp3": "uid://bx81nwfhegkd2",
 	"ラッパのファンファーレ.mp3": "uid://can1jh5nm483x",

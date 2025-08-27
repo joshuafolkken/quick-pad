@@ -95,15 +95,17 @@ static func increment_clear_count() -> ErrorCode:
 	return _save(Section.STATISTICS, SectionKey.CLEAR_COUNT, count)
 
 
-static func _load_pad(row: int, column: int, default: String) -> Array[String]:
+static func load_pad(row_index: int, column_index: int, default: String) -> String:
 	var section_name: String = Section.keys()[Section.PAD]
-	var key_name := "0-%d-%d" % [row, column]
+	var key_name := "0-%d-%d" % [row_index, column_index]
 
 	return _get_value(section_name, key_name, default)
 
 
-static func _save_pad(row: int, column: int, file_path: String) -> ErrorCode:
+static func _save_pad(row_index: int, column_index: int, file_path: String) -> ErrorCode:
 	var section_name: String = Section.keys()[Section.PAD]
-	var key_name := "0-%d-%d" % [row, column]
+	var key_name := "0-%d-%d" % [row_index, column_index]
+
+	print("Saving pad: key: %s, value: %s" % [key_name, file_path])
 
 	return _set_value(section_name, key_name, file_path)

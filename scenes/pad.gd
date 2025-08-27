@@ -7,6 +7,9 @@ var _is_audio_loaded: bool:
 	get:
 		return _player.stream != null
 
+var _row_index := -1
+var _column_index := -1
+
 @onready var _label: Label = $MarginContainer/Label
 @onready var _player: AudioStreamPlayer = $Player
 @onready var _rect: ColorRect = $ColorRect
@@ -36,7 +39,7 @@ func _is_valid_audio_file(file_path: String) -> bool:
 	return extension in SUPPORTED_AUDIO_FORMATS
 
 
-func _load_audio_file(file_path: String) -> void:
+func load_audio_file(file_path: String) -> void:
 	var file_name := file_path.get_file()
 	print("Loading audio file: ", file_name)
 
@@ -47,6 +50,7 @@ func _load_audio_file(file_path: String) -> void:
 	_player.stream = audio_stream
 	var file_name_no_ext := file_name.get_basename()
 	set_label(file_name_no_ext)
+	Settings._save_pad(_row_index, _column_index, file_path)
 
 
 func load_audio_by_uid(uid: String, file_name: String) -> void:
@@ -74,7 +78,7 @@ func _on_files_dropped(files: PackedStringArray) -> void:
 		print("Invalid audio file format")
 		return
 
-	_load_audio_file(file_path)
+	load_audio_file(file_path)
 
 
 func _ready() -> void:
@@ -109,3 +113,8 @@ func play_audio() -> void:
 
 func _on_button_down() -> void:
 	play_audio()
+
+
+func set_grid_position(row_index: int, column_index: int) -> void:
+	_row_index = row_index
+	_column_index = column_index

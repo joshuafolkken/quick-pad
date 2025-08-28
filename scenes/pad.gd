@@ -15,14 +15,22 @@ var _interaction_handler: PadInteractionHandler
 
 
 func _ready() -> void:
+	_initialize_components()
+	_setup_platform_handlers()
+
+
+func _initialize_components() -> void:
 	_audio_player = AudioPlayer.new(_player, _rect)
 	_ui_controller = PadUIController.new(_label, _rect)
 	_ui_controller.set_default_label()
+
 	_pad_controller = PadController.new(_audio_player, _ui_controller)
 	_interaction_handler = PadInteractionHandler.new(_pad_controller)
 
 	_audio_player.connect_finished_signal(_on_player_finished)
 
+
+func _setup_platform_handlers() -> void:
 	if PlatformDetector.is_web_platform():
 		_setup_web_platform()
 	else:

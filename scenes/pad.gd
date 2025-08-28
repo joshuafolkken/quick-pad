@@ -102,6 +102,9 @@ func _on_files_dropped(files: PackedStringArray) -> void:
 
 
 func _setup_file_dialog() -> void:
+	if OS.get_name() == "web":
+		return
+
 	_file_dialog.use_native_dialog = true
 	_file_dialog.access = FileDialog.ACCESS_FILESYSTEM
 	_file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
@@ -137,10 +140,30 @@ func play_audio() -> void:
 	_player.play()
 
 
+func _open_web_file_dialog() -> void:
+	if JavaScriptBridge.eval("typeof window !== 'undefined'", true):
+		var js_code := """
+		var input = document.createElement('input');
+		input.type = 'file';
+		input.accept = '.wav,.mp3,.ogg';
+		input.onchange = function(e) {
+			var file = e.target.files[0];
+			if (file) {
+				window.godotInstance.call_deferred('_on_file_dialog_file_selected', file.name);
+			}
+		};
+		input.click();
+		"""
+		JavaScriptBridge.eval(js_code, true)
+
+
 func _on_button_down() -> void:
 	var main: Main = get_tree().get_current_scene()
 	if main and main.is_setting_mode():
-		_file_dialog.popup_centered()
+		if OS.get_name() == "Web":
+			_open_web_file_dialog()
+		else:
+			_file_dialog.popup_centered()
 	else:
 		play_audio()
 

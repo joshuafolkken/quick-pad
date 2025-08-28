@@ -1,0 +1,57 @@
+class_name AudioPlayer
+extends RefCounted
+
+const DEFAULT_COLOR = Color.BLACK
+const ACTION_COLOR = Color.WHITE
+const ACTIVE_COLOR = Color.DARK_RED
+
+var _player: AudioStreamPlayer
+var _rect: ColorRect
+
+
+func _init(player: AudioStreamPlayer, rect: ColorRect) -> void:
+	_player = player
+	_rect = rect
+
+
+func load_audio_stream(stream: AudioStream) -> void:
+	_player.stream = stream
+
+
+func load_audio_by_uid(uid: String) -> bool:
+	var audio_stream := load(uid)
+
+	if audio_stream == null:
+		Log.e("Failed to load audio with UID: " + uid)
+		return false
+
+	_player.stream = audio_stream
+	return true
+
+
+func load_audio_from_file(file_path: String) -> bool:
+	var audio_stream := AudioManager.create_stream(file_path)
+	if audio_stream == null:
+		return false
+
+	_player.stream = audio_stream
+	return true
+
+
+func play() -> void:
+	if not is_audio_loaded():
+		Log.w("No audio file loaded")
+		return
+
+	UIEffects.create_glow_effect(_rect, ACTION_COLOR, ACTIVE_COLOR)
+	_player.play()
+
+
+func is_audio_loaded() -> bool:
+	return _player.stream != null
+
+
+# MEMO: 使ってる？
+func connect_finished_signal(callable: Callable) -> void:
+	if not _player.finished.is_connected(callable):
+		_player.finished.connect(callable)

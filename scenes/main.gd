@@ -1,3 +1,4 @@
+class_name Main
 extends Node2D
 
 const ROW_SIZE = 4
@@ -43,6 +44,12 @@ const FILE_NAMES: Array = [
 	["クイズ出題1.mp3", "クイズ正解1.mp3", "クイズ不正解1.mp3"],
 ]
 
+@onready
+var _setting_button: TextureButton = $CanvasLayer/VBoxContainer/Control/HBoxContainer/SettingButton
+@onready
+# gdlint:ignore = max-line-length
+var _setting_button_color_rect: ColorRect = $CanvasLayer/VBoxContainer/Control/HBoxContainer/SettingButton/ColorRect
+
 
 func _load_pad(row_index: int, column_index: int) -> void:
 	var default: String = FILE_NAMES[row_index][column_index]
@@ -59,7 +66,7 @@ func _load_pad(row_index: int, column_index: int) -> void:
 
 
 func _ready() -> void:
-	# print(ProjectSettings.globalize_path("user://"))
+	# Log.i(ProjectSettings.globalize_path("user://"))
 
 	for row_index in ROW_SIZE:
 		for column_index in COLUMN_SIZE:
@@ -83,3 +90,14 @@ func _input(event: InputEvent) -> void:
 		var node_path := NODE_PATH_FORMAT % [row_index, column_index]
 		var pad: Pad = get_node(node_path)
 		pad.play_audio()
+
+
+func _on_setting_button_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		_setting_button_color_rect.color = Color8(0, 193, 167)
+	else:
+		_setting_button_color_rect.color = Color.BLACK
+
+
+func is_setting_mode() -> bool:
+	return _setting_button.button_pressed

@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://eufd3b7a5ftf"]
+[gd_scene load_steps=4 format=3 uid="uid://eufd3b7a5ftf"]
 
 [ext_resource type="Script" uid="uid://b1tu88gjkc8e1" path="res://scenes/main.gd" id="1_o5qli"]
+[ext_resource type="Texture2D" uid="uid://badu4vv3gblja" path="res://assets/icons/folder-arrow-down-svgrepo-com.svg" id="2_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://cj5p1ndmiain5" path="res://scenes/row.tscn" id="2_sugp2"]
 
 [node name="Main" type="Node2D"]
@@ -15,6 +16,64 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 2
+metadata/_edit_lock_ = true
+
+[node name="Control" type="Control" parent="CanvasLayer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="CanvasLayer/VBoxContainer/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SettingButton" type="TextureButton" parent="CanvasLayer/VBoxContainer/Control/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+toggle_mode = true
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/VBoxContainer/Control/HBoxContainer/SettingButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/VBoxContainer/Control/HBoxContainer/SettingButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/VBoxContainer/Control/HBoxContainer/SettingButton/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("2_jyhfs")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Row0" parent="CanvasLayer/VBoxContainer" instance=ExtResource("2_sugp2")]
 layout_mode = 2
@@ -27,3 +86,5 @@ layout_mode = 2
 
 [node name="Row3" parent="CanvasLayer/VBoxContainer" instance=ExtResource("2_sugp2")]
 layout_mode = 2
+
+[connection signal="toggled" from="CanvasLayer/VBoxContainer/Control/HBoxContainer/SettingButton" to="." method="_on_setting_button_toggled"]

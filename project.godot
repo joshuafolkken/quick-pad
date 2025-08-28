@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="Quick Pad"
-config/version="0.10.0"
-run/main_scene="uid://eufd3b7a5ftf"
+config/version="0.11.0"
+run/main_scene="uid://b630j6sxy1blx"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 

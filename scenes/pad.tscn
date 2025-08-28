@@ -60,3 +60,4 @@ mouse_default_cursor_shape = 2
 stream = ExtResource("2_sqfiy")
 
 [connection signal="button_down" from="Button" to="." method="_on_button_down"]
+[connection signal="finished" from="Player" to="." method="_on_player_finished"]

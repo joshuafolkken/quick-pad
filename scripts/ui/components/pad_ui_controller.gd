@@ -2,6 +2,7 @@ class_name PadUIController
 extends RefCounted
 
 const DEFAULT_COLOR = Color.BLACK
+const DEFAULT_LABEL_TEXT = "N/A"
 
 var _label: Label
 var _rect: ColorRect
@@ -25,10 +26,4 @@ func reset_color() -> void:
 
 
 func set_default_label() -> void:
-	_label.text = "N/A"
-
-
-func update_label_from_file(file_path: String) -> void:
-	var file_name := file_path.get_file()
-	var file_name_no_ext := file_name.get_basename()
-	set_label_text(file_name_no_ext)
+	_label.text = DEFAULT_LABEL_TEXT

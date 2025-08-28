@@ -56,10 +56,6 @@ func load_audio_by_uid(uid: String, file_name: String) -> void:
 	_pad_controller.load_audio_by_uid(uid, file_name)
 
 
-func set_label(value: String) -> void:
-	_ui_controller.set_label_text(value)
-
-
 func play_audio() -> void:
 	_pad_controller.play_audio()
 
@@ -69,11 +65,11 @@ func set_grid_position(row_index: int, column_index: int) -> void:
 
 
 func _on_player_finished() -> void:
-	_ui_controller.reset_color()
+	_pad_controller.handle_audio_finished()
 
 
 func _on_file_dialog_file_selected(path: String) -> void:
-	_pad_controller.handle_file_drop(path)
+	_interaction_handler.handle_file_dialog_selection(path)
 
 
 func _on_button_down() -> void:

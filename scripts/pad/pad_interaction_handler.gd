@@ -8,8 +8,16 @@ func _init(pad_controller: PadController) -> void:
 	_pad_controller = pad_controller
 
 
+func _should_handle_play_action() -> bool:
+	return not _is_setting_mode()
+
+
+func _should_handle_setting_action() -> bool:
+	return _is_setting_mode()
+
+
 func handle_button_down() -> void:
-	if _is_setting_mode():
+	if not _should_handle_play_action():
 		return
 
 	Log.d()
@@ -17,13 +25,17 @@ func handle_button_down() -> void:
 
 
 func handle_button_pressed(web_handler: PadWebHandler, file_dialog: FileDialog) -> void:
-	if not _is_setting_mode():
+	if not _should_handle_setting_action():
 		return
 
 	if PlatformDetector.is_web_platform():
 		web_handler.open_file_dialog()
 	else:
 		file_dialog.popup_centered()
+
+
+func handle_file_dialog_selection(path: String) -> void:
+	_pad_controller.handle_file_drop(path)
 
 
 func _is_setting_mode() -> bool:

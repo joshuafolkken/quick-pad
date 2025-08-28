@@ -62,5 +62,6 @@ stream = ExtResource("2_sqfiy")
 [node name="FileDialog" type="FileDialog" parent="."]
 
 [connection signal="button_down" from="Button" to="." method="_on_button_down"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="finished" from="Player" to="." method="_on_player_finished"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]

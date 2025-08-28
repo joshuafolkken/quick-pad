@@ -3,6 +3,7 @@ fullsize
 joshuafolkken
 Lefthook
 msys
+onchange
 OSTYPE
 platformer
 respawned

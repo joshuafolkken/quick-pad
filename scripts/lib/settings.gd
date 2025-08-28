@@ -106,6 +106,4 @@ static func _save_pad(row_index: int, column_index: int, file_path: String) -> E
 	var section_name: String = Section.keys()[Section.PAD]
 	var key_name := "0-%d-%d" % [row_index, column_index]
 
-	print("Saving pad: key: %s, value: %s" % [key_name, file_path])
-
 	return _set_value(section_name, key_name, file_path)

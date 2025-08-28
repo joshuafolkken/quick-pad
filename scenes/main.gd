@@ -65,7 +65,7 @@ func _load_pad(row_index: int, column_index: int) -> void:
 
 
 func _ready() -> void:
-	# print(ProjectSettings.globalize_path("user://"))
+	# Log.i(ProjectSettings.globalize_path("user://"))
 
 	for row_index in ROW_SIZE:
 		for column_index in COLUMN_SIZE:

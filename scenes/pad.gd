@@ -50,7 +50,6 @@ func load_audio_file(file_path: String) -> void:
 	_player.stream = audio_stream
 	var file_name_no_ext := file_name.get_basename()
 	set_label(file_name_no_ext)
-	Settings._save_pad(_row_index, _column_index, file_path)
 
 
 func load_audio_by_uid(uid: String, file_name: String) -> void:
@@ -63,6 +62,16 @@ func load_audio_by_uid(uid: String, file_name: String) -> void:
 	_player.stream = audio_stream
 	_label.text = file_name.get_basename()
 	print("Successfully loaded audio with UID: ", uid)
+
+
+func _copy_file_to_user_directory(source_path: String) -> String:
+	var target_path := "user://audio/" + source_path.get_file()
+	var dir := DirAccess.open("user://")
+
+	dir.make_dir_recursive("audio")
+	dir.copy(source_path, target_path)
+
+	return target_path
 
 
 func _on_files_dropped(files: PackedStringArray) -> void:
@@ -78,7 +87,9 @@ func _on_files_dropped(files: PackedStringArray) -> void:
 		print("Invalid audio file format")
 		return
 
-	load_audio_file(file_path)
+	var target_path := _copy_file_to_user_directory(file_path)
+	Settings._save_pad(_row_index, _column_index, target_path)
+	load_audio_file(target_path)
 
 
 func _ready() -> void:

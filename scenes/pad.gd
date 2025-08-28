@@ -16,6 +16,7 @@ var _column_index := -1
 @onready var _label: Label = $MarginContainer/Label
 @onready var _player: AudioStreamPlayer = $Player
 @onready var _rect: ColorRect = $ColorRect
+@onready var _file_dialog: FileDialog = $FileDialog
 
 
 func _create_audio_stream(file_path: String) -> AudioStream:
@@ -77,6 +78,16 @@ func _copy_file_to_user_directory(source_path: String) -> String:
 	return target_path
 
 
+func _save_audio(file_path: String) -> void:
+	if not _is_valid_audio_file(file_path):
+		print("Invalid audio file format: " + file_path)
+		return
+
+	var target_path := _copy_file_to_user_directory(file_path)
+	Settings._save_pad(_row_index, _column_index, target_path)
+	load_audio_file(target_path)
+
+
 func _on_files_dropped(files: PackedStringArray) -> void:
 	if not _is_mouse_in_pad_area():
 		return
@@ -86,18 +97,22 @@ func _on_files_dropped(files: PackedStringArray) -> void:
 		return
 
 	var file_path := files[0]
-	if not _is_valid_audio_file(file_path):
-		print("Invalid audio file format")
-		return
 
-	var target_path := _copy_file_to_user_directory(file_path)
-	Settings._save_pad(_row_index, _column_index, target_path)
-	load_audio_file(target_path)
+	_save_audio(file_path)
+
+
+func _setup_file_dialog() -> void:
+	_file_dialog.use_native_dialog = true
+	_file_dialog.access = FileDialog.ACCESS_FILESYSTEM
+	_file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+	_file_dialog.filters = PackedStringArray(["*.wav", "*.mp3", "*.ogg"])
+	_file_dialog.title = "Open Audio File"
 
 
 func _ready() -> void:
 	get_window().files_dropped.connect(_on_files_dropped)
 	_label.text = "N/A"
+	_setup_file_dialog()
 
 
 func set_label(value: String) -> void:
@@ -123,7 +138,11 @@ func play_audio() -> void:
 
 
 func _on_button_down() -> void:
-	play_audio()
+	var main: Main = get_tree().get_current_scene()
+	if main and main.is_setting_mode():
+		_file_dialog.popup_centered()
+	else:
+		play_audio()
 
 
 func set_grid_position(row_index: int, column_index: int) -> void:
@@ -133,3 +152,7 @@ func set_grid_position(row_index: int, column_index: int) -> void:
 
 func _on_player_finished() -> void:
 	_rect.color = DEFAULT_COLOR
+
+
+func _on_file_dialog_file_selected(path: String) -> void:
+	_save_audio(path)

@@ -2,6 +2,9 @@ class_name Pad
 extends Control
 
 const SUPPORTED_AUDIO_FORMATS := ["wav", "mp3", "ogg"]
+const DEFAULT_COLOR = Color.BLACK
+const ACTION_COLOR = Color.WHITE
+const ACTIVE_COLOR = Color.DARK_RED
 
 var _is_audio_loaded: bool:
 	get:
@@ -102,14 +105,11 @@ func set_label(value: String) -> void:
 
 
 func _add_glow_effect() -> void:
-	var initial_color := _rect.color
-	var glow_color := Color(1.0, 1.0, 1.0, 1.0)
-
 	var tween := create_tween()
 	tween.set_parallel(true)
 
-	tween.tween_property(_rect, "color", glow_color, 0.04)
-	tween.tween_property(_rect, "color", initial_color, 0.04).set_delay(0.04)
+	tween.tween_property(_rect, "color", ACTION_COLOR, 0.04)
+	tween.tween_property(_rect, "color", ACTIVE_COLOR, 0.04).set_delay(0.04)
 
 
 func play_audio() -> void:
@@ -129,3 +129,7 @@ func _on_button_down() -> void:
 func set_grid_position(row_index: int, column_index: int) -> void:
 	_row_index = row_index
 	_column_index = column_index
+
+
+func _on_player_finished() -> void:
+	_rect.color = DEFAULT_COLOR

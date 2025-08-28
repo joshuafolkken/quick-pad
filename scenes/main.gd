@@ -1,5 +1,8 @@
 extends Node2D
 
+const ROW_SIZE = 4
+const COLUMN_SIZE = 3
+
 const NODE_PATH_FORMAT = "CanvasLayer/VBoxContainer/Row%d/Pad%d"
 const FILE_PATH_FORMAT = "res://assets/audio/%s"
 
@@ -40,27 +43,27 @@ const FILE_NAMES: Array = [
 	["クイズ出題1.mp3", "クイズ正解1.mp3", "クイズ不正解1.mp3"],
 ]
 
-@onready var pad0: Pad = $CanvasLayer/VBoxContainer/Row0/Pad0
-@onready var pad1: Pad = $CanvasLayer/VBoxContainer/Row0/Pad1
-@onready var pad2: Pad = $CanvasLayer/VBoxContainer/Row0/Pad2
+
+func _load_pad(row_index: int, column_index: int) -> void:
+	var default: String = FILE_NAMES[row_index][column_index]
+	var node_path := NODE_PATH_FORMAT % [row_index, column_index]
+	var pad: Pad = get_node(node_path)
+	pad.set_grid_position(row_index, column_index)
+	var file_path := Settings.load_pad(row_index, column_index, default)
+
+	if AUDIO_UID_MAPPING.has(file_path):
+		var uid := AUDIO_UID_MAPPING[file_path]
+		pad.load_audio_by_uid(uid, file_path)
+	else:
+		pad.load_audio_file(file_path)
 
 
 func _ready() -> void:
-	for row in FILE_NAMES.size():
-		print(row)
-		var row_names: Array = FILE_NAMES[row]
+	# print(ProjectSettings.globalize_path("user://"))
 
-		for column in row_names.size():
-			var file_name: String = row_names[column]
-
-			var node_path := NODE_PATH_FORMAT % [row, column]
-			var pad: Pad = get_node(node_path)
-
-			if not AUDIO_UID_MAPPING.has(file_name):
-				return
-
-			var uid := AUDIO_UID_MAPPING[file_name]
-			pad.load_audio_by_uid(uid, file_name)
+	for row_index in ROW_SIZE:
+		for column_index in COLUMN_SIZE:
+			_load_pad(row_index, column_index)
 
 
 func _input(event: InputEvent) -> void:
@@ -74,9 +77,9 @@ func _input(event: InputEvent) -> void:
 			return
 
 		var coords: Array = SHORTCUT_MAPPING[event_key.keycode]
-		var row: int = coords[0]
-		var column: int = coords[1]
+		var row_index: int = coords[0]
+		var column_index: int = coords[1]
 
-		var node_path := NODE_PATH_FORMAT % [row, column]
+		var node_path := NODE_PATH_FORMAT % [row_index, column_index]
 		var pad: Pad = get_node(node_path)
 		pad.play_audio()

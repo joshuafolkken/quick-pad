@@ -4,7 +4,7 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1756349927|6712921';
+const CACHE_VERSION = '1756396209|8391442';
 /** @type {string} */
 const CACHE_PREFIX = 'Quick Pad-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;

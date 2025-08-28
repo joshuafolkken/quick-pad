@@ -47,6 +47,7 @@ const FILE_NAMES: Array = [
 @onready
 var _setting_button: TextureButton = $CanvasLayer/VBoxContainer/Control/HBoxContainer/SettingButton
 @onready
+# gdlint:ignore = max-line-length
 var _setting_button_color_rect: ColorRect = $CanvasLayer/VBoxContainer/Control/HBoxContainer/SettingButton/ColorRect
 
 

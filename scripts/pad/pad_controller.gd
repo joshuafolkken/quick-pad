@@ -8,7 +8,10 @@ var _column_index: int
 
 
 func _init(
-	audio_player: AudioPlayer, ui_controller: PadUIController, row_index: int, column_index: int
+	audio_player: AudioPlayer,
+	ui_controller: PadUIController,
+	row_index: int = -1,
+	column_index: int = -1
 ) -> void:
 	_audio_player = audio_player
 	_ui_controller = ui_controller
@@ -47,3 +50,8 @@ func handle_web_file(file_name: String, file_data_base64: String) -> void:
 
 func is_audio_loaded() -> bool:
 	return _audio_player.is_audio_loaded()
+
+
+func set_grid_position(row_index: int, column_index: int) -> void:
+	_row_index = row_index
+	_column_index = column_index

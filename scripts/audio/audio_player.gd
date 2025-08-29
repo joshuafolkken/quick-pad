@@ -1,10 +1,6 @@
 class_name AudioPlayer
 extends RefCounted
 
-const DEFAULT_COLOR = Color.BLACK
-const ACTION_COLOR = Color.WHITE
-const ACTIVE_COLOR = Color.DARK_RED
-
 var _player: AudioStreamPlayer
 var _rect: ColorRect
 
@@ -44,7 +40,7 @@ func play() -> void:
 		Log.w("No audio file loaded")
 		return
 
-	UIEffects.create_glow_effect(_rect, ACTION_COLOR, ACTIVE_COLOR)
+	UIEffects.create_glow_effect(_rect, Constants.PadColors.PRESSED, Constants.PadColors.PLAYING)
 	_player.play()
 
 

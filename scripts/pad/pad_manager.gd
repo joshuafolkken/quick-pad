@@ -2,10 +2,15 @@ class_name PadManager
 extends RefCounted
 
 
-static func setup(main_scene: Main, row_index: int, column_index: int) -> void:
+static func setup(main_scene: Main, row_index: int, column_index: int) -> bool:
 	var pad := _get_pad(main_scene, row_index, column_index)
+	if not pad:
+		Log.e(Constants.ErrorMessages.PAD_NOT_FOUND % [row_index, column_index])
+		return false
+
 	pad.set_grid_position(row_index, column_index)
 	_load_audio(pad, row_index, column_index)
+	return true
 
 
 static func play(main_scene: Main, row_index: int, column_index: int) -> void:
@@ -13,14 +18,16 @@ static func play(main_scene: Main, row_index: int, column_index: int) -> void:
 	pad.play_audio()
 
 
-static func initialize(main_scene: Main) -> void:
+static func initialize_all(main_scene: Main) -> void:
 	for coords: Array[int] in GridManager.iterate_grid():
-		setup(
-			main_scene, coords[Constants.ARRAY_INDICES.ROW], coords[Constants.ARRAY_INDICES.COLUMN]
-		)
+		setup(main_scene, coords[Constants.ArrayIndices.ROW], coords[Constants.ArrayIndices.COLUMN])
 
 
 static func _get_pad(main_scene: Main, row_index: int, column_index: int) -> Pad:
+	if not GridManager.is_valid_position(row_index, column_index):
+		Log.e(Constants.ErrorMessages.INVALID_POSITION % [row_index, column_index])
+		return null
+
 	var pad_path := GridManager.get_node_path(row_index, column_index)
 	return main_scene.get_node(pad_path)
 

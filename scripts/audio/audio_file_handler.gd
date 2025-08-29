@@ -3,7 +3,7 @@ extends RefCounted
 
 
 static func copy_file_to_user_directory(source_path: String) -> String:
-	var target_path := Constants.USER_AUDIO_DIR + source_path.get_file()
+	var target_path := Constants.FileSystem.USER_AUDIO_DIR + source_path.get_file()
 	var dir := FileSystemHandler.get_user_directory()
 
 	if not dir:
@@ -23,7 +23,7 @@ static func copy_file_to_user_directory(source_path: String) -> String:
 
 static func save_web_file(file_name: String, file_data_base64: String) -> String:
 	var buffer := Marshalls.base64_to_raw(file_data_base64)
-	var target_path := Constants.USER_AUDIO_DIR + file_name
+	var target_path := Constants.FileSystem.USER_AUDIO_DIR + file_name
 
 	var dir := FileSystemHandler.get_user_directory()
 	dir.make_dir_recursive("audio")

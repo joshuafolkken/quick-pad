@@ -6,9 +6,9 @@ static var _user_dir_access: DirAccess
 
 static func get_user_directory() -> DirAccess:
 	if not _user_dir_access:
-		_user_dir_access = DirAccess.open(Constants.USER_DIR)
+		_user_dir_access = DirAccess.open(Constants.FileSystem.USER_DIR)
 		if not _user_dir_access:
-			push_error("Failed to access user directory: " + Constants.USER_DIR)
+			push_error("Failed to access user directory: " + Constants.FileSystem.USER_DIR)
 
 	return _user_dir_access
 
@@ -21,8 +21,8 @@ static func setup_file_dialog(dialog: FileDialog) -> void:
 	dialog.use_native_dialog = true
 	dialog.access = FileDialog.ACCESS_FILESYSTEM
 	dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
-	dialog.filters = Constants.AUDIO_FILE_FILTERS
-	dialog.title = Constants.FILE_DIALOG_TITLE
+	dialog.filters = Constants.FileSystem.AUDIO_FILE_FILTERS
+	dialog.title = Constants.FileSystem.FILE_DIALOG_TITLE
 
 
 static func create_user_directory(path: String) -> bool:

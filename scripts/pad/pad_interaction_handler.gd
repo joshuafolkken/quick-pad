@@ -39,6 +39,10 @@ func handle_file_dialog_selection(path: String) -> void:
 
 
 func _is_setting_mode() -> bool:
-	var scene_tree: SceneTree = Engine.get_main_loop()
-	var main: Main = scene_tree.get_current_scene()
+	var main: Main = _get_main_scene()
 	return main and main.is_setting_mode()
+
+
+func _get_main_scene() -> Main:
+	var scene_tree: SceneTree = Engine.get_main_loop()
+	return scene_tree.get_current_scene()

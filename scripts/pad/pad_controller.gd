@@ -24,7 +24,7 @@ func _update_ui_on_audio_load_success(display_name: String) -> void:
 
 
 func load_audio_file(file_path: String) -> void:
-	if _audio_player.load_audio_from_file(file_path):
+	if _audio_player.load_audio_file(file_path):
 		var display_name := file_path.get_file().get_basename()
 		_update_ui_on_audio_load_success(display_name)
 

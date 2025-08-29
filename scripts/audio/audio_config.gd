@@ -1,7 +1,7 @@
 class_name AudioConfig
 extends RefCounted
 
-const AUDIO_UID_MAPPING: Dictionary[String, String] = {
+const UID_MAPPING: Dictionary[String, String] = {
 	"和太鼓でドン.mp3": "uid://ddd8foqjrnovn",
 	"和太鼓でドドン.mp3": "uid://dg2q22benpd3",
 	"チーン1.mp3": "uid://wbv01t4b6ymq",
@@ -16,7 +16,7 @@ const AUDIO_UID_MAPPING: Dictionary[String, String] = {
 	"クイズ不正解1.mp3": "uid://daqt5a22itqmr",
 }
 
-const FILE_NAMES: Array[Array] = [
+const DEFAULT_FILE_NAMES: Array[Array] = [
 	["和太鼓でドン.mp3", "和太鼓でドドン.mp3", "チーン1.mp3"],
 	["歓声と拍手1.mp3", "ラッパのファンファーレ.mp3", "ドンドンパフパフ.mp3"],
 	["ツッコミを入れる.mp3", "「わぁーーっ♪」.mp3", "自主規制ピー音.mp3"],
@@ -27,14 +27,17 @@ const FILE_PATH_FORMAT = "res://assets/audio/%s"
 
 
 static func get_default_file_name(row_index: int, column_index: int) -> String:
-	if row_index < FILE_NAMES.size() and column_index < FILE_NAMES[row_index].size():
-		return FILE_NAMES[row_index][column_index]
+	if (
+		row_index < DEFAULT_FILE_NAMES.size()
+		and column_index < DEFAULT_FILE_NAMES[row_index].size()
+	):
+		return DEFAULT_FILE_NAMES[row_index][column_index]
 	return ""
 
 
-static func get_audio_uid(file_path: String) -> String:
-	if AUDIO_UID_MAPPING.has(file_path):
-		return AUDIO_UID_MAPPING[file_path]
+static func get_uid(file_path: String) -> String:
+	if UID_MAPPING.has(file_path):
+		return UID_MAPPING[file_path]
 	return ""
 
 
@@ -43,4 +46,4 @@ static func get_file_path(file_name: String) -> String:
 
 
 static func has_uid_mapping(file_path: String) -> bool:
-	return AUDIO_UID_MAPPING.has(file_path)
+	return UID_MAPPING.has(file_path)

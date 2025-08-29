@@ -35,5 +35,5 @@ func _on_files_dropped(files: PackedStringArray) -> void:
 	_pad_controller.handle_file_drop(files[0])
 
 
-func handle_file_dialog_selection(path: String) -> void:
-	_pad_controller.handle_file_drop(path)
+func handle_file_dialog_selection(file_path: String) -> void:
+	_pad_controller.handle_file_drop(file_path)

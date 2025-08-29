@@ -23,25 +23,6 @@ static func _get_file_info() -> String:
 	return location
 
 
-# static func _get_class_and_function_info() -> String:
-# 	var stack := get_stack()
-
-# 	if not stack.size() > STACK_INDEX:
-# 		return "UNKNOWN::UNKNOWN"
-
-# 	var caller: Dictionary = stack[STACK_INDEX]
-# 	var function_name: String = caller.function
-
-# 	var class_label := "UNKNOWN"
-# 	if caller.source != "":
-# 		var source_path: String = caller.source
-# 		var file_name: String = source_path.get_file().get_basename()
-# 		class_label = file_name.capitalize()
-
-# 	var info := "[%s::%s]" % [class_label, function_name]
-# 	return info
-
-
 static func _get_time_with_milliseconds() -> String:
 	var time := Time.get_time_string_from_system()
 	var milliseconds := str(Time.get_ticks_msec() % 1000).pad_zeros(3)

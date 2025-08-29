@@ -20,6 +20,8 @@ const SHORTCUT_MAPPING: Dictionary[int, Array] = {
 static func get_pad_coordinates(keycode: int) -> Array[int]:
 	if SHORTCUT_MAPPING.has(keycode):
 		return SHORTCUT_MAPPING[keycode]
+
+	Log.w("Invalid keycode: %d" % keycode)
 	return [-1, -1]
 
 

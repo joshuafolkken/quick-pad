@@ -15,7 +15,12 @@ static func create_stream(file_path: String) -> AudioStream:
 		"ogg":
 			return AudioStreamOggVorbis.load_from_file(file_path)
 		_:
-			Log.e("Unsupported audio format: " + extension)
+			Log.e(
+				(
+					"Unsupported audio format: '%s'. Supported formats: %s"
+					% [extension, ", ".join(SUPPORTED_AUDIO_FORMATS)]
+				)
+			)
 			return null
 
 

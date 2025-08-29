@@ -3,20 +3,29 @@ extends RefCounted
 
 
 static func copy_file_to_user_directory(source_path: String) -> String:
-	var target_path := "user://audio/" + source_path.get_file()
-	var dir := DirAccess.open("user://")
+	var target_path := Constants.USER_AUDIO_DIR + source_path.get_file()
+	var dir := FileSystemHandler.get_user_directory()
 
-	dir.make_dir_recursive("audio")
-	dir.copy(source_path, target_path)
+	if not dir:
+		Log.e("Failed to open user directory")
+		return ""
+
+	if dir.make_dir_recursive("audio") != OK:
+		Log.e("Failed to create audio directory")
+		return ""
+
+	if dir.copy(source_path, target_path) != OK:
+		Log.e("Failed to copy file from %s to %s" % [source_path, target_path])
+		return ""
 
 	return target_path
 
 
 static func save_web_file(file_name: String, file_data_base64: String) -> String:
 	var buffer := Marshalls.base64_to_raw(file_data_base64)
-	var target_path := "user://audio/" + file_name
+	var target_path := Constants.USER_AUDIO_DIR + file_name
 
-	var dir := DirAccess.open("user://")
+	var dir := FileSystemHandler.get_user_directory()
 	dir.make_dir_recursive("audio")
 
 	var file := FileAccess.open(target_path, FileAccess.WRITE)
@@ -38,7 +47,7 @@ static func validate_and_save_file(file_path: String, row_index: int, column_ind
 	else:
 		target_path = copy_file_to_user_directory(file_path)
 
-	Settings._save_pad(row_index, column_index, target_path)
+	_save_pad_settings(target_path, row_index, column_index)
 	return target_path
 
 
@@ -49,5 +58,9 @@ static func validate_and_save_web_file(
 		return ""
 
 	var target_path := AudioFileHandler.save_web_file(file_name, file_data_base64)
-	Settings._save_pad(row_index, column_index, target_path)
+	_save_pad_settings(target_path, row_index, column_index)
 	return target_path
+
+
+static func _save_pad_settings(file_path: String, row_index: int, column_index: int) -> void:
+	Settings._save_pad(row_index, column_index, file_path)

@@ -39,7 +39,7 @@ func _setup_platform_handlers() -> void:
 
 func _setup_web_platform() -> void:
 	_web_handler = PadWebHandler.new(_pad_controller)
-	_web_handler.setup_web_file_callback()
+	_web_handler.setup_callback()
 
 
 func _setup_desktop_platform() -> void:

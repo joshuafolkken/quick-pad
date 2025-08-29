@@ -16,7 +16,7 @@ func _ready() -> void:
 
 	_setting_mode_manager = SettingModeManager.new(_setting_button, _setting_button_color_rect)
 	_input_handler = InputHandler.new(self)
-	PadManager.initialize_all_pads(self)
+	PadManager.initialize_all(self)
 
 
 func _input(event: InputEvent) -> void:

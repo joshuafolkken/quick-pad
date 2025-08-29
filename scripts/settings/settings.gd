@@ -1,10 +1,10 @@
 class_name Settings
 
 enum ErrorCode { SUCCESS = 0, FILE_NOT_FOUND = 1, SAVE_ERROR = 2, LOAD_ERROR = 3 }
-
 enum Section { LANGUAGE, STATISTICS, PAD }
-
 enum SectionKey { LOCALE, PLAY_COUNT, CLEAR_COUNT }
+
+const PAD_KEY_FORMAT = "0-%d-%d"
 
 const CONFIG := {
 	"PATH": "user://settings.cfg",
@@ -16,19 +16,22 @@ const ERROR_MESSAGES := {
 	ErrorCode.LOAD_ERROR: "Failed to load settings from %s, using default locale: %s",
 }
 
+const LOG_PREFIX = "[Settings] "
+const SUCCESS_MESSAGE = "Language settings have been cleared successfully"
+
 
 static func clear() -> ErrorCode:
-	var dir := DirAccess.open("user://")
+	var dir := FileSystemHandler.get_user_directory()
 	if not dir:
-		push_error("[Settings] " + ERROR_MESSAGES[ErrorCode.FILE_NOT_FOUND])
+		push_error(LOG_PREFIX + ERROR_MESSAGES[ErrorCode.FILE_NOT_FOUND])
 		return ErrorCode.FILE_NOT_FOUND
 
 	if dir.file_exists(CONFIG.PATH):
 		var err := dir.remove(CONFIG.PATH)
 		if err != OK:
-			push_error("[Settings] " + ERROR_MESSAGES[ErrorCode.SAVE_ERROR] % [CONFIG.PATH, err])
+			push_error(LOG_PREFIX + ERROR_MESSAGES[ErrorCode.SAVE_ERROR] % [CONFIG.PATH, err])
 			return ErrorCode.SAVE_ERROR
-		push_warning("[Settings] Language settings have been cleared successfully")
+		push_warning(LOG_PREFIX + SUCCESS_MESSAGE)
 	return ErrorCode.SUCCESS
 
 
@@ -56,7 +59,7 @@ static func _set_value(section_name: String, key_name: String, value: Variant) -
 
 	var err := config.save(CONFIG.PATH)
 	if err != OK:
-		push_error("[Settings] " + ERROR_MESSAGES[ErrorCode.SAVE_ERROR] % [CONFIG.PATH, err])
+		push_error(LOG_PREFIX + ERROR_MESSAGES[ErrorCode.SAVE_ERROR] % [CONFIG.PATH, err])
 		return ErrorCode.SAVE_ERROR
 
 	return ErrorCode.SUCCESS
@@ -97,13 +100,13 @@ static func increment_clear_count() -> ErrorCode:
 
 static func load_pad(row_index: int, column_index: int, default: String) -> String:
 	var section_name: String = Section.keys()[Section.PAD]
-	var key_name := "0-%d-%d" % [row_index, column_index]
+	var key_name := PAD_KEY_FORMAT % [row_index, column_index]
 
 	return _get_value(section_name, key_name, default)
 
 
 static func _save_pad(row_index: int, column_index: int, file_path: String) -> ErrorCode:
 	var section_name: String = Section.keys()[Section.PAD]
-	var key_name := "0-%d-%d" % [row_index, column_index]
+	var key_name := PAD_KEY_FORMAT % [row_index, column_index]
 
 	return _set_value(section_name, key_name, file_path)

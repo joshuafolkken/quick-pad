@@ -24,7 +24,7 @@ func _update_ui_on_audio_load_success(display_name: String) -> void:
 
 
 func load_audio_file(file_path: String) -> void:
-	if _audio_player.load_audio_from_file(file_path):
+	if _audio_player.load_audio_file(file_path):
 		var display_name := file_path.get_file().get_basename()
 		_update_ui_on_audio_load_success(display_name)
 
@@ -39,14 +39,16 @@ func play_audio() -> void:
 	_audio_player.play()
 
 
-func _handle_validated_file(target_path: String) -> void:
-	if target_path != "":
-		load_audio_file(target_path)
+func _process_file(file_path: String) -> void:
+	if file_path.is_empty():
+		return
+
+	load_audio_file(file_path)
 
 
 func handle_file_drop(file_path: String) -> void:
 	var target_path := AudioFileHandler.validate_and_save_file(file_path, _row_index, _column_index)
-	_handle_validated_file(target_path)
+	_process_file(target_path)
 
 
 func handle_web_file(file_name: String, file_data_base64: String) -> void:
@@ -54,7 +56,7 @@ func handle_web_file(file_name: String, file_data_base64: String) -> void:
 		file_name, file_data_base64, _row_index, _column_index
 	)
 
-	_handle_validated_file(target_path)
+	_process_file(target_path)
 
 
 func is_audio_loaded() -> bool:

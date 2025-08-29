@@ -19,8 +19,10 @@ static func play(main_scene: Main, row_index: int, column_index: int) -> void:
 
 
 static func initialize_all(main_scene: Main) -> void:
-	for coords: Array[int] in GridManager.iterate_grid():
-		setup(main_scene, coords[Constants.ArrayIndices.ROW], coords[Constants.ArrayIndices.COLUMN])
+	for coords in GridManager.iterate_grid():
+		var row_index: int = coords[Constants.ArrayIndices.ROW]
+		var column_index: int = coords[Constants.ArrayIndices.COLUMN]
+		setup(main_scene, row_index, column_index)
 
 
 static func _get_pad(main_scene: Main, row_index: int, column_index: int) -> Pad:

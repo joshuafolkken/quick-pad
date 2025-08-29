@@ -5,10 +5,11 @@ var _setting_mode_manager: SettingModeManager
 var _input_handler: InputHandler
 
 @onready
-var _setting_button: TextureButton = $CanvasLayer/VBoxContainer/Control/HBoxContainer/SettingButton
+# gdlint:ignore = max-line-length
+var _setting_button: TextureButton = $CanvasLayer/VBoxContainer/Control/MarginContainer/HBoxContainer/SettingButton
 @onready
 # gdlint:ignore = max-line-length
-var _setting_button_color_rect: ColorRect = $CanvasLayer/VBoxContainer/Control/HBoxContainer/SettingButton/ColorRect
+var _setting_button_color_rect: ColorRect = $CanvasLayer/VBoxContainer/Control/MarginContainer/HBoxContainer/SettingButton/ColorRect
 
 
 func _ready() -> void:
@@ -29,3 +30,7 @@ func _on_setting_button_toggled(toggled_on: bool) -> void:
 
 func is_setting_mode() -> bool:
 	return _setting_mode_manager.is_setting_mode()
+
+
+func reset_setting_mode() -> void:
+	_setting_mode_manager.reset()

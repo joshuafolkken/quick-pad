@@ -23,3 +23,7 @@ func is_setting_mode() -> bool:
 
 func get_setting_button() -> TextureButton:
 	return _setting_button
+
+
+func reset() -> void:
+	_setting_button.button_pressed = false

@@ -31,24 +31,29 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/Control"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/VBoxContainer/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
 
-[node name="Control" type="Control" parent="CanvasLayer/VBoxContainer/Control/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/Control/MarginContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="CanvasLayer/VBoxContainer/Control/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SettingButton" type="TextureButton" parent="CanvasLayer/VBoxContainer/Control/HBoxContainer"]
+[node name="SettingButton" type="TextureButton" parent="CanvasLayer/VBoxContainer/Control/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 toggle_mode = true
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/VBoxContainer/Control/HBoxContainer/SettingButton"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/VBoxContainer/Control/MarginContainer/HBoxContainer/SettingButton"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -57,7 +62,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/VBoxContainer/Control/HBoxContainer/SettingButton"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/VBoxContainer/Control/MarginContainer/HBoxContainer/SettingButton"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -69,7 +74,7 @@ theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/VBoxContainer/Control/HBoxContainer/SettingButton/MarginContainer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/VBoxContainer/Control/MarginContainer/HBoxContainer/SettingButton/MarginContainer"]
 layout_mode = 2
 texture = ExtResource("2_jyhfs")
 expand_mode = 1
@@ -87,4 +92,4 @@ layout_mode = 2
 [node name="Row3" parent="CanvasLayer/VBoxContainer" instance=ExtResource("2_sugp2")]
 layout_mode = 2
 
-[connection signal="toggled" from="CanvasLayer/VBoxContainer/Control/HBoxContainer/SettingButton" to="." method="_on_setting_button_toggled"]
+[connection signal="toggled" from="CanvasLayer/VBoxContainer/Control/MarginContainer/HBoxContainer/SettingButton" to="." method="_on_setting_button_toggled"]

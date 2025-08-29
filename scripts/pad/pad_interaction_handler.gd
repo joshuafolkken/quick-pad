@@ -33,6 +33,8 @@ func handle_button_pressed(web_handler: PadWebHandler, file_dialog: FileDialog) 
 	else:
 		file_dialog.popup_centered()
 
+	reset_setting_mode()
+
 
 func handle_file_dialog_selection(path: String) -> void:
 	_pad_controller.handle_file_drop(path)
@@ -46,3 +48,8 @@ func _is_setting_mode() -> bool:
 func _get_main_scene() -> Main:
 	var scene_tree: SceneTree = Engine.get_main_loop()
 	return scene_tree.get_current_scene()
+
+
+func reset_setting_mode() -> void:
+	var main: Main = _get_main_scene()
+	main.reset_setting_mode()

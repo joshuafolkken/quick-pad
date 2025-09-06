@@ -20,7 +20,6 @@ func handle_button_down() -> void:
 	if not _should_handle_play_action():
 		return
 
-	Log.d()
 	_pad_controller.play_audio()
 
 

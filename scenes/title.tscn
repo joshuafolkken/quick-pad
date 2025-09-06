@@ -31,20 +31,26 @@ theme_override_constants/separation = 20
 
 [node name="Label" type="Label" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 160
+theme_override_font_sizes/font_size = 180
 text = "Quick Pad"
-horizontal_alignment = 1
-
-[node name="Label2" type="Label" parent="CanvasLayer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 80
-text = "© Joshua Studio"
 horizontal_alignment = 1
 
 [node name="Label3" type="Label" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 80
 text = "Tap to Start"
+horizontal_alignment = 1
+
+[node name="VersionLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "%VERSION%"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "© Joshua Studio"
 horizontal_alignment = 1
 
 [node name="TextureButton" type="TextureButton" parent="CanvasLayer"]

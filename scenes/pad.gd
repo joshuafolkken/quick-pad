@@ -73,8 +73,22 @@ func _on_file_dialog_file_selected(path: String) -> void:
 
 
 func _on_button_down() -> void:
-	_interaction_handler.handle_button_down()
+	pass
+	#_interaction_handler.handle_button_down()
 
 
 func _on_button_pressed() -> void:
-	_interaction_handler.handle_button_pressed(_web_handler, _file_dialog)
+	pass
+	#_interaction_handler.handle_button_pressed(_web_handler, _file_dialog)
+
+
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch:
+		_gui_input_touch(event as InputEventScreenTouch)
+
+
+func _gui_input_touch(event: InputEventScreenTouch) -> void:
+	if event.pressed:
+		_interaction_handler.handle_button_down()
+	else:
+		_interaction_handler.handle_button_pressed(_web_handler, _file_dialog)

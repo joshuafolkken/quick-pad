@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Quick Pad"
-config/version="0.18.2"
+config/version="0.19.0"
 run/main_scene="uid://b630j6sxy1blx"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
@@ -41,6 +41,10 @@ enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg")
 [gui]
 
 theme/custom_font="uid://d0luqrsi4o1lw"
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
 
 [internationalization]
 
